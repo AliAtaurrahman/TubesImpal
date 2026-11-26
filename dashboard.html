@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LILALUNA — Apparel Cashier &amp; Order Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #0A0A0A;
+            overflow-x: hidden;
+        }
+        .font-brand {
+            font-family: 'Archivo Black', 'Inter', sans-serif;
+            letter-spacing: -0.03em;
+        }
+        .font-mono-code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .mono-card-shadow {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+        }
+        .right-tab-shadow {
+            box-shadow: -6px 6px 24px rgba(0, 0, 0, 0.55);
+        }
+        .bottom-bar-shadow {
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+        }
+        @keyframes panelReveal {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.985);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .animate-panel {
+            animation: panelReveal 0.2s ease-out forwards;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#0A0A0A] text-[#0A0A0A] selection:bg-[#0A0A0A] selection:text-white">
+
+    <!-- ==================== DASHBOARD SHELL (HIDDEN WHEN LOGGED OUT) ==================== -->
+    <div id="dashboard-shell" class="min-h-screen flex flex-col">
+
+        <!-- 1. TOP WHITE HEADER WITH ANGLED BLACK GEOMETRY -->
+        <header class="fixed top-0 left-0 right-0 h-[68px] sm:h-[74px] bg-[#FFFFFF] z-30 flex items-center justify-between pl-5 sm:pl-8 pr-0 overflow-hidden select-none border-b border-black/10">
+            <div class="flex items-center gap-3 z-10">
+                <span class="font-brand text-[26px] sm:text-[32px] text-[#0A0A0A] leading-none">
+                    LILALUNA
+                </span>
+            </div>
+            <!-- Top-Right Angled Black Geometric Accent -->
+            <div class="h-full w-[52%] sm:w-[44%] md:w-[38%] relative pointer-events-none">
+                <svg class="w-full h-full block" viewBox="0 0 400 80" preserveAspectRatio="none" aria-hidden="true">
+                    <polygon points="0,0 400,0 400,76 165,54 75,0" fill="#0A0A0A" />
+                </svg>
+            </div>
+        </header>
+
+        <!-- 2. MAIN TOPOGRAPHIC CANVAS -->
+        <main class="relative flex-1 pt-[68px] sm:pt-[74px] pb-[78px] sm:pb-[84px] min-h-screen flex flex-col">
+
+            <!-- Full-Screen Monochrome Topographic Contour Vector Background -->
+            <div class="fixed inset-0 top-[68px] sm:top-[74px] bottom-[78px] sm:bottom-[84px] pointer-events-none z-0 overflow-hidden bg-[#0A0A0A]">
+                <svg class="w-full h-full object-cover" viewBox="0 0 1200 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect width="1200" height="1000" fill="#0A0A0A" />
+                    <g fill="none" stroke="#FFFFFF" stroke-opacity="0.52" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M -40,80 C 60,40 160,110 230,65 C 300,20 380,-20 460,45 C 530,105 490,210 390,235 C 290,260 220,185 130,220 C 50,250 -10,200 -40,160" />
+                        <path d="M 35,100 C 105,65 185,120 250,80 C 315,40 395,20 445,80 C 495,140 445,205 365,215 C 285,225 220,165 145,190 C 80,212 20,175 -15,135" />
+                        <path d="M 95,115 C 145,85 215,125 270,95 C 325,65 395,55 425,105 C 455,155 405,195 340,195 C 275,195 215,150 155,165 C 105,178 65,135 95,115 Z" />
+                        <path d="M 160,122 C 195,105 245,125 290,108 C 335,91 375,92 390,122 C 405,152 365,172 320,170 C 275,168 225,142 185,148 C 155,152 135,135 160,122 Z" />
+
+                        <path d="M 640,-20 C 670,70 740,120 840,105 C 940,90 1010,150 1110,130 C 1170,118 1210,85 1240,60" />
+                        <path d="M 700,-20 C 725,50 785,90 865,78 C 945,66 1015,118 1095,100 C 1145,88 1185,60 1220,30" />
+                        <path d="M 760,-20 C 780,30 830,60 890,50 C 950,40 1010,82 1075,68" />
+
+                        <path d="M 140,260 C 280,210 440,295 560,235 C 680,175 830,190 930,290 C 1030,390 990,560 860,610 C 730,660 630,550 490,580 C 350,610 250,710 130,640 C 10,570 0,310 140,260 Z" />
+                        <path d="M 195,288 C 325,242 465,315 572,260 C 680,205 812,218 902,308 C 992,398 952,548 838,592 C 724,636 628,538 502,562 C 376,586 288,678 182,618 C 76,558 65,334 195,288 Z" />
+                        <path d="M 250,315 C 365,275 495,335 585,285 C 675,235 795,245 875,325 C 955,405 915,535 815,575 C 715,615 625,525 515,545 C 405,565 325,645 235,595 C 145,545 135,355 250,315 Z" />
+                        <path d="M 305,342 C 405,308 520,355 598,312 C 676,269 778,275 848,342 C 918,409 882,520 795,555 C 708,590 622,512 528,528 C 434,544 362,612 288,570 C 214,528 205,376 305,342 Z" />
+                        <path d="M 360,370 C 445,340 545,378 612,340 C 679,302 762,308 820,362 C 878,416 848,505 775,535 C 702,565 622,500 542,512 C 462,524 402,578 342,545 C 282,512 275,400 360,370 Z" />
+                        <path d="M 415,398 C 485,374 568,402 625,370 C 682,338 745,342 792,385 C 839,428 815,490 755,515 C 695,540 625,488 558,498 C 491,508 442,545 395,518 C 348,491 345,422 415,398 Z" />
+                        <path d="M 472,425 C 525,408 590,425 638,402 C 686,379 730,382 762,412 C 794,442 778,480 732,496 C 686,512 630,478 575,484 C 520,490 482,512 448,492 C 414,472 419,442 472,425 Z" />
+                        <path d="M 535,445 C 575,432 625,438 665,425 C 705,412 735,428 725,455 C 715,482 655,478 605,475 C 555,472 495,458 535,445 Z" />
+
+                        <path d="M -50,420 C 20,410 75,465 65,535 C 55,605 -10,655 -60,645" />
+                        <path d="M -50,465 C 0,460 35,495 28,540 C 21,585 -20,612 -60,605" />
+                        <path d="M 1060,340 C 1120,310 1195,330 1245,390" />
+                        <path d="M 1020,410 C 1095,375 1185,405 1245,485" />
+                        <path d="M 985,485 C 1075,450 1175,495 1245,585" />
+
+                        <path d="M 355,695 C 465,645 605,675 705,635 C 805,595 925,645 975,745 C 1025,845 965,965 855,1005 C 745,1045 625,985 515,995 C 405,1005 315,935 305,845 C 295,755 305,718 355,695 Z" />
+                        <path d="M 405,725 C 495,685 615,710 702,675 C 789,640 892,682 935,765 C 978,848 925,945 832,978 C 739,1011 632,960 538,968 C 444,976 368,918 358,842 C 348,766 355,748 405,725 Z" />
+                        <path d="M 455,755 C 525,722 625,745 698,715 C 771,685 858,718 892,785 C 926,852 882,925 808,950 C 734,975 642,935 562,940 C 482,945 420,900 412,838 C 404,776 415,772 455,755 Z" />
+                        <path d="M 505,785 C 558,760 635,778 692,755 C 749,732 820,755 848,805 C 876,855 840,905 782,922 C 724,939 652,910 588,912 C 524,914 475,882 468,835 C 461,788 475,798 505,785 Z" />
+                        <path d="M 560,812 C 598,796 655,808 698,792 C 741,776 788,792 802,825 C 816,858 785,888 742,895 C 699,902 645,885 598,885 C 551,885 522,862 522,835 C 522,808 538,822 560,812 Z" />
+
+                        <path d="M -30,720 C 70,710 175,765 215,855 C 255,945 215,1015 140,1040" />
+                        <path d="M -30,775 C 48,768 132,812 162,882 C 192,952 162,1005 95,1030" />
+                        <path d="M -30,830 C 28,825 90,858 112,910 C 134,962 112,1002 55,1022" />
+                        <path d="M 980,820 C 1060,790 1165,815 1235,885" />
+                        <path d="M 940,895 C 1025,865 1135,895 1215,975" />
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Compact Monochrome Session Status Pill (Top-Left) -->
+            <div class="relative z-20 px-4 sm:px-8 pt-3.5 flex items-center justify-between pointer-events-none">
+                <button type="button" onclick="toggleSessionPillCompact()" title="Status Sesi Kasir Aktif" class="pointer-events-auto inline-flex items-center gap-2 bg-[#FFFFFF] text-[#0A0A0A] border-2 border-[#0A0A0A] rounded-full px-3.5 py-1.5 text-xs font-extrabold tracking-tight shadow-md hover:bg-zinc-100 transition-colors">
+                    <span id="session-status-dot" class="w-2.5 h-2.5 rounded-full bg-[#0A0A0A] animate-pulse"></span>
+                    <span id="session-pill-text" class="font-mono-code">USR01 • ACTIVE</span>
+                    <span class="text-black/40">|</span>
+                    <span id="pill-order-count" class="font-mono-code">4</span>
+                    <span class="text-[11px] font-bold">ORD</span>
+                </button>
+            </div>
+
+            <!-- FLOATING RIGHT-SIDE WHITE TAB (Add Order, Search, Sort) -->
+            <aside aria-label="Quick Actions" class="fixed right-0 top-[44%] -translate-y-1/2 z-30 bg-[#FFFFFF] text-[#0A0A0A] rounded-l-[24px] border-y-2 border-l-2 border-[#0A0A0A] right-tab-shadow py-4 px-2.5 sm:px-3.5 flex flex-col items-center gap-4 sm:gap-5 select-none">
+                <!-- Action 1: Add Order -->
+                <button type="button" onclick="openAddOrderModal()" class="group flex flex-col items-center justify-center gap-1 w-14 sm:w-16 py-1 rounded-xl hover:bg-zinc-100 active:scale-95 transition-all">
+                    <svg class="w-7 h-7 sm:w-8 sm:h-8 text-[#0A0A0A] group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9.5"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight text-[#0A0A0A] leading-tight text-center">Add Order</span>
+                </button>
+
+                <!-- Action 2: Search -->
+                <button type="button" onclick="triggerQuickSearch()" class="group flex flex-col items-center justify-center gap-1 w-14 sm:w-16 py-1 rounded-xl hover:bg-zinc-100 active:scale-95 transition-all">
+                    <svg class="w-7 h-7 sm:w-8 sm:h-8 text-[#0A0A0A] group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="10.5" cy="10.5" r="6.5"></circle>
+                        <line x1="15.5" y1="15.5" x2="21" y2="21"></line>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight text-[#0A0A0A] leading-tight text-center">Search</span>
+                </button>
+
+                <!-- Action 3: Sort -->
+                <button type="button" onclick="triggerQuickSort()" class="group flex flex-col items-center justify-center gap-1 w-14 sm:w-16 py-1 rounded-xl hover:bg-zinc-100 active:scale-95 transition-all">
+                    <svg class="w-7 h-7 sm:w-8 sm:h-8 text-[#0A0A0A] group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <g transform="rotate(-42 12 12)">
+                            <rect x="2.5" y="8.5" width="19" height="7" rx="1.2"></rect>
+                            <line x1="6" y1="8.5" x2="6" y2="11.5"></line>
+                            <line x1="9" y1="8.5" x2="9" y2="10.5"></line>
+                            <line x1="12" y1="8.5" x2="12" y2="12"></line>
+                            <line x1="15" y1="8.5" x2="15" y2="10.5"></line>
+                            <line x1="18" y1="8.5" x2="18" y2="11.5"></line>
+                        </g>
+                    </svg>
+                    <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight text-[#0A0A0A] leading-tight text-center">Sort</span>
+                </button>
+            </aside>
+
+            <!-- DYNAMIC CONTENT WORKSPACE -->
+            <div class="relative z-10 flex-1 flex flex-col px-4 sm:px-8 pt-3 pb-4 pr-24 sm:pr-28 max-w-5xl w-full mx-auto">
+
+                <!-- VIEW A: DASHBOARD (Clean Topographic Canvas matching wireframe) -->
+                <section id="view-dashboard" class="flex-1 flex flex-col justify-end pointer-events-none">
+                </section>
+
+                <!-- VIEW B: LIST ORDER (Pesanan & OrderController) -->
+                <section id="view-list-order" class="hidden animate-panel my-auto">
+                    <div class="bg-[#FFFFFF] text-[#0A0A0A] rounded-[24px] border-2 border-[#0A0A0A] mono-card-shadow overflow-hidden">
+                        <div class="px-5 py-4 bg-[#0A0A0A] text-[#FFFFFF] flex flex-wrap items-center justify-between gap-2">
+                            <div>
+                                <h2 class="font-brand text-base sm:text-lg tracking-tight uppercase">List Order</h2>
+                                <p id="list-order-subtitle" class="text-[11px] text-white/75 font-mono-code">OrderController.getDatabasePesanan()</p>
+                            </div>
+                            <button type="button" onclick="activateView('dashboard')" class="px-3 py-1 rounded-full bg-[#FFFFFF] text-[#0A0A0A] text-xs font-extrabold hover:bg-zinc-200 transition-colors">
+                                Tutup
+                            </button>
+                        </div>
+
+                        <!-- Search & Sort Controls -->
+                        <div class="p-4 sm:p-5 border-b border-black/15 bg-zinc-50 flex flex-col sm:flex-row gap-2.5">
+                            <div class="relative flex-1">
+                                <input type="text" id="order-search-input" oninput="renderOrderList()" placeholder="Cari ID, nama pelanggan, atau jenis kaos..." class="w-full pl-9 pr-3 py-2 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] text-xs font-semibold placeholder:text-zinc-400 focus:outline-none">
+                                <svg class="w-4 h-4 text-[#0A0A0A] absolute left-3 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                                    <circle cx="10.5" cy="10.5" r="6.5"></circle>
+                                    <line x1="15.5" y1="15.5" x2="21" y2="21"></line>
+                                </svg>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <select id="order-sort-select" onchange="renderOrderList()" class="px-3 py-2 rounded-xl bg-[#FFFFFF] border-2 border-[#0A0A0A] text-xs font-extrabold focus:outline-none">
+                                    <option value="id">Urut: ID Pesanan</option>
+                                    <option value="nama">Urut: Nama</option>
+                                    <option value="jumlah">Urut: Jumlah</option>
+                                    <option value="total">Urut: Subtotal</option>
+                                </select>
+                                <button type="button" id="order-sort-dir-btn" onclick="toggleSortDirection()" class="px-3 py-2 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] text-xs font-extrabold hover:opacity-85 transition-opacity">
+                                    ASC ↑
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Order Cards / Table List -->
+                        <div id="order-list-container" class="max-h-[48vh] overflow-y-auto divide-y divide-black/10">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW C: SUMMARY (LaporanRangkuman: totPes & totPen) -->
+                <section id="view-summary" class="hidden animate-panel my-auto">
+                    <div class="bg-[#FFFFFF] text-[#0A0A0A] rounded-[24px] border-2 border-[#0A0A0A] mono-card-shadow overflow-hidden">
+                        <div class="px-5 py-4 bg-[#0A0A0A] text-[#FFFFFF] flex items-center justify-between">
+                            <div>
+                                <h2 class="font-brand text-base sm:text-lg tracking-tight uppercase">Summary Laporan</h2>
+                                <p class="text-[11px] text-white/75 font-mono-code">LaporanRangkuman (totPes &amp; totPen)</p>
+                            </div>
+                            <button type="button" onclick="activateView('dashboard')" class="px-3 py-1 rounded-full bg-[#FFFFFF] text-[#0A0A0A] text-xs font-extrabold hover:bg-zinc-200 transition-colors">
+                                Tutup
+                            </button>
+                        </div>
+
+                        <div class="p-4 sm:p-6 space-y-5 max-h-[54vh] overflow-y-auto">
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <div class="p-3.5 rounded-2xl border-2 border-[#0A0A0A] bg-zinc-50">
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-zinc-500">Total Pesanan</span>
+                                    <div id="sum-tot-pes" class="font-brand text-2xl mt-1">0</div>
+                                </div>
+                                <div class="p-3.5 rounded-2xl border-2 border-[#0A0A0A] bg-[#0A0A0A] text-[#FFFFFF]">
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-white/70">Total Pendapatan</span>
+                                    <div id="sum-tot-pen" class="font-brand text-lg sm:text-xl mt-1 truncate">Rp 0</div>
+                                </div>
+                                <div class="p-3.5 rounded-2xl border-2 border-[#0A0A0A] bg-zinc-50">
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-zinc-500">Total Kaos</span>
+                                    <div id="sum-tot-qty" class="font-brand text-2xl mt-1">0 pcs</div>
+                                </div>
+                                <div class="p-3.5 rounded-2xl border-2 border-[#0A0A0A] bg-zinc-50">
+                                    <span class="text-[10px] font-extrabold uppercase tracking-wider text-zinc-500">Ukuran Terlaris</span>
+                                    <div id="sum-top-size" class="font-brand text-2xl mt-1">-</div>
+                                </div>
+                            </div>
+
+                            <!-- Monochrome Size Distribution Bars -->
+                            <div class="p-4 rounded-2xl border-2 border-[#0A0A0A]">
+                                <h3 class="text-xs font-black uppercase tracking-wider mb-3">Distribusi Ukuran Kaos (S / M / L / XL / XXL)</h3>
+                                <div id="summary-size-bars" class="space-y-2.5">
+                                </div>
+                            </div>
+
+                            <!-- Monochrome Revenue Breakdown by Shirt Type -->
+                            <div class="p-4 rounded-2xl border-2 border-[#0A0A0A]">
+                                <h3 class="text-xs font-black uppercase tracking-wider mb-3">Rincian Pendapatan per Jenis Kaos</h3>
+                                <div id="summary-type-list" class="space-y-2 text-xs">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW D: AUDIT LOG (OrderController.getAuditLog()) -->
+                <section id="view-audit-log" class="hidden animate-panel my-auto">
+                    <div class="bg-[#FFFFFF] text-[#0A0A0A] rounded-[24px] border-2 border-[#0A0A0A] mono-card-shadow overflow-hidden">
+                        <div class="px-5 py-4 bg-[#0A0A0A] text-[#FFFFFF] flex items-center justify-between">
+                            <div>
+                                <h2 class="font-brand text-base sm:text-lg tracking-tight uppercase">Audit Log</h2>
+                                <p class="text-[11px] text-white/75 font-mono-code">OrderController.getAuditLog()</p>
+                            </div>
+                            <button type="button" onclick="activateView('dashboard')" class="px-3 py-1 rounded-full bg-[#FFFFFF] text-[#0A0A0A] text-xs font-extrabold hover:bg-zinc-200 transition-colors">
+                                Tutup
+                            </button>
+                        </div>
+
+                        <div class="px-4 py-3 bg-zinc-100 border-b border-black/15 flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex items-center gap-1.5">
+                                <button type="button" onclick="setLogFilter('ALL')" data-log-filter="ALL" class="log-filter-btn px-3 py-1 rounded-lg bg-[#0A0A0A] text-[#FFFFFF] text-[11px] font-extrabold">Semua</button>
+                                <button type="button" onclick="setLogFilter('SUKSES')" data-log-filter="SUKSES" class="log-filter-btn px-3 py-1 rounded-lg bg-[#FFFFFF] border border-[#0A0A0A] text-[#0A0A0A] text-[11px] font-extrabold">SUKSES</button>
+                                <button type="button" onclick="setLogFilter('GAGAL')" data-log-filter="GAGAL" class="log-filter-btn px-3 py-1 rounded-lg bg-[#FFFFFF] border border-[#0A0A0A] text-[#0A0A0A] text-[11px] font-extrabold">GAGAL</button>
+                            </div>
+                            <button type="button" onclick="clearAuditLog()" class="text-[11px] font-extrabold underline hover:opacity-70">
+                                Bersihkan Log
+                            </button>
+                        </div>
+
+                        <div id="audit-log-container" class="max-h-[46vh] overflow-y-auto divide-y divide-black/10 p-2">
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- 3. BOTTOM WHITE NAVIGATION BAR (6 Wireframe Items) -->
+        <nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 right-0 h-[78px] sm:h-[84px] bg-[#FFFFFF] text-[#0A0A0A] z-30 border-t border-black/15 bottom-bar-shadow px-1 sm:px-6 flex items-center justify-around select-none">
+
+            <!-- 1. Dashboard -->
+            <button type="button" data-nav="dashboard" onclick="activateView('dashboard')" class="bottom-nav-btn flex flex-col items-center justify-center gap-1 py-1.5 px-2 sm:px-4 rounded-xl text-[#0A0A0A] hover:bg-zinc-100 transition-all">
+                <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 10.5L12 3l9 7.5"></path>
+                    <path d="M5 9.5V20h14V9.5"></path>
+                    <path d="M9.5 20v-6h5v6"></path>
+                </svg>
+                <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight">Dashboard</span>
+            </button>
+
+            <!-- 2. Create Order -->
+            <button type="button" data-nav="create-order" onclick="openAddOrderModal()" class="bottom-nav-btn flex flex-col items-center justify-center gap-1 py-1.5 px-2 sm:px-4 rounded-xl text-[#0A0A0A] hover:bg-zinc-100 transition-all">
+                <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9.5"></circle>
+                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+                <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight">Create Order</span>
+            </button>
+
+            <!-- 3. List Order -->
+            <button type="button" data-nav="list-order" onclick="activateView('list-order')" class="bottom-nav-btn flex flex-col items-center justify-center gap-1 py-1.5 px-2 sm:px-4 rounded-xl text-[#0A0A0A] hover:bg-zinc-100 transition-all">
+                <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="3.5" width="14" height="17" rx="1.8"></rect>
+                    <line x1="5" y1="16.5" x2="19" y2="16.5"></line>
+                </svg>
+                <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight">List Order</span>
+            </button>
+
+            <!-- 4. Summary -->
+            <button type="button" data-nav="summary" onclick="activateView('summary')" class="bottom-nav-btn flex flex-col items-center justify-center gap-1 py-1.5 px-2 sm:px-4 rounded-xl text-[#0A0A0A] hover:bg-zinc-100 transition-all">
+                <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9.5"></circle>
+                    <polyline points="12 6.8 12 12 15.8 14.2"></polyline>
+                </svg>
+                <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight">Summary</span>
+            </button>
+
+            <!-- 5. Audit Log -->
+            <button type="button" data-nav="audit-log" onclick="activateView('audit-log')" class="bottom-nav-btn flex flex-col items-center justify-center gap-1 py-1.5 px-2 sm:px-4 rounded-xl text-[#0A0A0A] hover:bg-zinc-100 transition-all">
+                <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+                    <line x1="3.5" y1="9.5" x2="20.5" y2="9.5"></line>
+                    <line x1="7" y1="13.5" x2="13" y2="13.5"></line>
+                </svg>
+                <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight">Audit Log</span>
+            </button>
+
+            <!-- 6. Log Out -->
+            <button type="button" data-nav="logout" onclick="handleLogoutClick()" class="bottom-nav-btn flex flex-col items-center justify-center gap-1 py-1.5 px-2 sm:px-4 rounded-xl text-[#0A0A0A] hover:bg-zinc-100 transition-all">
+                <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7"></path>
+                    <polyline points="16 16 21 12 16 8"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span class="text-[10px] sm:text-[11px] font-extrabold tracking-tight">Log Out</span>
+            </button>
+
+        </nav>
+
+    </div>
+    <!-- ==================== END OF DASHBOARD SHELL ==================== -->
+
+    <!-- ==================== MODAL: ADD / CREATE ORDER ==================== -->
+    <div id="modal-add-order" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
+        <div class="w-full max-w-md bg-[#FFFFFF] text-[#0A0A0A] rounded-[24px] border-2 border-[#0A0A0A] mono-card-shadow overflow-hidden animate-panel">
+            <div class="px-5 py-4 bg-[#0A0A0A] text-[#FFFFFF] flex items-center justify-between">
+                <div>
+                    <h3 class="font-brand text-base tracking-tight uppercase">Create Order</h3>
+                    <p class="text-[11px] text-white/70 font-mono-code">FormAddOrder &rarr; OrderController</p>
+                </div>
+                <button type="button" onclick="closeAddOrderModal()" class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-[#0A0A0A] transition-colors">
+                    &times;
+                </button>
+            </div>
+
+            <form id="form-add-order" onsubmit="submitOrderForm(event)" class="p-5 space-y-3.5 max-h-[78vh] overflow-y-auto">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="field-id" class="block text-[11px] font-black uppercase tracking-wider mb-1">ID Pesanan</label>
+                        <input type="text" id="field-id" required placeholder="ORD005" class="w-full px-3 py-2 rounded-xl border-2 border-[#0A0A0A] font-mono-code text-xs font-bold uppercase focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="field-ukuran" class="block text-[11px] font-black uppercase tracking-wider mb-1">Ukuran Kaos</label>
+                        <select id="field-ukuran" required class="w-full px-3 py-2 rounded-xl border-2 border-[#0A0A0A] text-xs font-extrabold bg-[#FFFFFF] focus:outline-none">
+                            <option value="S">S (Small)</option>
+                            <option value="M">M (Medium)</option>
+                            <option value="L" selected>L (Large)</option>
+                            <option value="XL">XL (Extra Large)</option>
+                            <option value="XXL">XXL (Double XL)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="field-nama" class="block text-[11px] font-black uppercase tracking-wider mb-1">Nama Pelanggan</label>
+                    <input type="text" id="field-nama" required placeholder="Contoh: Raka Pratama" class="w-full px-3 py-2 rounded-xl border-2 border-[#0A0A0A] text-xs font-semibold focus:outline-none">
+                </div>
+
+                <div>
+                    <label for="field-jenis" class="block text-[11px] font-black uppercase tracking-wider mb-1">Jenis Kaos</label>
+                    <input type="text" id="field-jenis" required list="kaos-presets" placeholder="Contoh: Heavyweight Boxy Tee 24s" class="w-full px-3 py-2 rounded-xl border-2 border-[#0A0A0A] text-xs font-semibold focus:outline-none">
+                    <datalist id="kaos-presets">
+                        <option value="Heavyweight Boxy Tee 24s"></option>
+                        <option value="Cotton Combed 30s Oversize"></option>
+                        <option value="Washed Vintage Graphic Tee"></option>
+                        <option value="Longsleeve Ribbed Monochrome"></option>
+                    </datalist>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="field-jumlah" class="block text-[11px] font-black uppercase tracking-wider mb-1">Jumlah (pcs)</label>
+                        <input type="number" id="field-jumlah" min="1" value="1" required oninput="refreshFormSubtotal()" class="w-full px-3 py-2 rounded-xl border-2 border-[#0A0A0A] font-mono-code text-xs font-bold focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="field-harga" class="block text-[11px] font-black uppercase tracking-wider mb-1">Harga Satuan (Rp)</label>
+                        <input type="number" id="field-harga" min="1000" step="1000" value="125000" required oninput="refreshFormSubtotal()" class="w-full px-3 py-2 rounded-xl border-2 border-[#0A0A0A] font-mono-code text-xs font-bold focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Live Subtotal Preview -->
+                <div class="p-3 rounded-xl bg-zinc-100 border-2 border-[#0A0A0A] flex items-center justify-between">
+                    <span class="text-[11px] font-extrabold uppercase tracking-wider">Estimasi Subtotal</span>
+                    <span id="field-subtotal-preview" class="font-brand text-sm">Rp 125.000</span>
+                </div>
+
+                <div class="pt-1 flex items-center gap-2.5">
+                    <button type="button" onclick="closeAddOrderModal()" class="flex-1 py-2.5 px-4 rounded-xl border-2 border-[#0A0A0A] text-xs font-extrabold hover:bg-zinc-100 transition-colors">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] text-xs font-extrabold hover:opacity-85 transition-opacity">
+                        SIMPAN PESANAN
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL: DELETE ORDER CONFIRMATION ==================== -->
+    <div id="modal-delete-confirm" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
+        <div class="w-full max-w-sm bg-[#FFFFFF] text-[#0A0A0A] rounded-[24px] border-2 border-[#0A0A0A] mono-card-shadow p-5 text-center animate-panel">
+            <h3 class="font-brand text-base uppercase tracking-tight">Hapus Pesanan&#63;</h3>
+            <p id="delete-confirm-msg" class="text-xs text-zinc-600 mt-1.5 leading-relaxed">
+                Apakah Anda yakin ingin menghapus data pesanan ini&#63;
+            </p>
+            <div class="grid grid-cols-2 gap-2.5 mt-4">
+                <button type="button" onclick="closeDeleteConfirmModal()" class="py-2.5 px-4 rounded-xl border-2 border-[#0A0A0A] text-xs font-extrabold hover:bg-zinc-100 transition-colors">
+                    Batal
+                </button>
+                <button type="button" id="btn-confirm-delete" class="py-2.5 px-4 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] text-xs font-extrabold hover:opacity-85 transition-opacity">
+                    Ya, Hapus
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL: KONFIRMASI LOG OUT (KHUSUS TANPA FORM EMAIL) ==================== -->
+    <div id="modal-logout-confirm" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-xs">
+        <div class="w-full max-w-sm bg-[#FFFFFF] text-[#0A0A0A] rounded-[24px] border-2 border-[#0A0A0A] mono-card-shadow p-6 text-center animate-panel">
+            <div class="w-12 h-12 rounded-2xl bg-[#0A0A0A] text-[#FFFFFF] flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h7"></path>
+                    <polyline points="16 16 21 12 16 8"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </div>
+            <h3 class="font-brand text-base uppercase tracking-tight">Konfirmasi Log Out</h3>
+            <div id="logout-user-info" class="mt-2 inline-block px-3 py-1 rounded-full bg-zinc-100 border border-[#0A0A0A] font-mono-code text-[11px] font-bold text-[#0A0A0A]">
+                USR01 — Ali Ataurrahman
+            </div>
+            <p class="text-xs text-zinc-600 mt-2.5 leading-relaxed">
+                Apakah Anda yakin ingin mengakhiri sesi kasir saat ini&#63;
+            </p>
+            <div class="grid grid-cols-2 gap-2.5 mt-5">
+                <button type="button" onclick="closeLogoutConfirmModal()" class="py-2.5 px-4 rounded-xl border-2 border-[#0A0A0A] text-[#0A0A0A] text-xs font-extrabold hover:bg-zinc-100 transition-colors">
+                    Batal
+                </button>
+                <button type="button" onclick="confirmLogoutAction()" class="py-2.5 px-4 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] text-xs font-extrabold hover:opacity-85 transition-opacity">
+                    Ya, Log Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FULL-SCREEN LOGIN & REGISTER PAGE (LOCKED WHEN LOGGED OUT) ==================== -->
+    <div id="login-screen" class="fixed inset-0 z-40 hidden flex-col bg-[#0A0A0A] overflow-y-auto">
+        <!-- Top Brand Header -->
+        <header class="w-full h-[68px] sm:h-[74px] bg-[#FFFFFF] shrink-0 flex items-center justify-between pl-5 sm:pl-8 pr-0 overflow-hidden select-none border-b border-black/10 z-10">
+            <span class="font-brand text-[26px] sm:text-[32px] text-[#0A0A0A] leading-none">
+                LILALUNA
+            </span>
+            <div class="h-full w-[52%] sm:w-[44%] md:w-[38%] relative pointer-events-none">
+                <svg class="w-full h-full block" viewBox="0 0 400 80" preserveAspectRatio="none" aria-hidden="true">
+                    <polygon points="0,0 400,0 400,76 165,54 75,0" fill="#0A0A0A" />
+                </svg>
+            </div>
+        </header>
+
+        <!-- Monochrome Topographic Background & Centered Login Card -->
+        <div class="relative flex-1 flex items-center justify-center p-4 sm:p-6">
+            <div class="absolute inset-0 pointer-events-none overflow-hidden bg-[#0A0A0A]">
+                <svg class="w-full h-full object-cover" viewBox="0 0 1200 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect width="1200" height="1000" fill="#0A0A0A" />
+                    <g fill="none" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M -40,80 C 60,40 160,110 230,65 C 300,20 380,-20 460,45 C 530,105 490,210 390,235 C 290,260 220,185 130,220 C 50,250 -10,200 -40,160" />
+                        <path d="M 95,115 C 145,85 215,125 270,95 C 325,65 395,55 425,105 C 455,155 405,195 340,195 C 275,195 215,150 155,165 C 105,178 65,135 95,115 Z" />
+                        <path d="M 640,-20 C 670,70 740,120 840,105 C 940,90 1010,150 1110,130 C 1170,118 1210,85 1240,60" />
+                        <path d="M 250,315 C 365,275 495,335 585,285 C 675,235 795,245 875,325 C 955,405 915,535 815,575 C 715,615 625,525 515,545 C 405,565 325,645 235,595 C 145,545 135,355 250,315 Z" />
+                        <path d="M 355,695 C 465,645 605,675 705,635 C 805,595 925,645 975,745 C 1025,845 965,965 855,1005 C 745,1045 625,985 515,995 C 405,1005 315,935 305,845 C 295,755 305,718 355,695 Z" />
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Login & Register Card (No Close Button — Must Authenticate) -->
+            <div class="relative z-10 w-full max-w-md bg-[#FFFFFF] text-[#0A0A0A] rounded-[24px] border-2 border-[#0A0A0A] mono-card-shadow overflow-hidden animate-panel">
+                <div class="px-6 py-4 bg-[#0A0A0A] text-[#FFFFFF]">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="font-brand text-base sm:text-lg tracking-tight uppercase">LILALUNA LOGIN</h2>
+                            <p class="text-[11px] text-white/70 font-mono-code">UserSession — Autentikasi Kasir</p>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-lg bg-[#FFFFFF] text-[#0A0A0A] font-mono-code text-[10px] font-black">
+                            LOCKED
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Logout Success Banner -->
+                <div id="logout-status-banner" class="hidden mx-6 mt-5 p-3 rounded-xl bg-zinc-100 border-2 border-[#0A0A0A] flex items-start gap-2.5">
+                    <span class="px-1.5 py-0.5 rounded bg-[#0A0A0A] text-[#FFFFFF] font-mono-code text-[10px] font-black shrink-0">INFO</span>
+                    <p class="text-xs font-bold text-[#0A0A0A] leading-snug">
+                        Berhasil Log Out. Silakan login kembali untuk mengakses fitur dashboard.
+                    </p>
+                </div>
+
+                <!-- Mode Tabs -->
+                <div class="px-6 pt-5">
+                    <div class="grid grid-cols-2 p-1 rounded-xl bg-zinc-100 border border-[#0A0A0A] text-xs font-extrabold">
+                        <button type="button" id="auth-tab-login" onclick="switchAuthMode('login')" class="py-2 rounded-lg bg-[#0A0A0A] text-[#FFFFFF] transition-all">LOGIN</button>
+                        <button type="button" id="auth-tab-register" onclick="switchAuthMode('register')" class="py-2 rounded-lg text-[#0A0A0A] transition-all">REGISTER</button>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form id="auth-form-login" onsubmit="submitLoginForm(event)" class="p-6 space-y-4">
+                    <div>
+                        <label for="login-email-input" class="block text-[11px] font-black uppercase tracking-wider mb-1">Email</label>
+                        <input type="email" id="login-email-input" required placeholder="ali@lilaluna.id" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#0A0A0A] text-xs font-semibold focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="login-pass-input" class="block text-[11px] font-black uppercase tracking-wider mb-1">Password</label>
+                        <input type="password" id="login-pass-input" required placeholder="••••••" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#0A0A0A] text-xs font-semibold focus:outline-none">
+                    </div>
+
+                    <!-- Registered Cashier Accounts Quick Fill -->
+                    <div class="p-3 rounded-xl bg-zinc-100 border border-zinc-300">
+                        <span class="block text-[10px] font-extrabold uppercase tracking-wider text-zinc-500 mb-2">Akun Kasir Terdaftar (Klik untuk isi):</span>
+                        <div id="demo-user-chips" class="flex flex-wrap gap-1.5">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] text-xs font-black uppercase tracking-wider hover:opacity-90 transition-opacity">
+                        Masuk Dashboard
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="auth-form-register" onsubmit="submitRegisterForm(event)" class="p-6 space-y-4 hidden">
+                    <div class="p-3 rounded-xl bg-zinc-100 border-2 border-[#0A0A0A] flex items-center justify-between text-xs">
+                        <span class="font-bold">ID_User Otomatis:</span>
+                        <span id="register-next-id" class="font-mono-code font-extrabold px-2.5 py-0.5 rounded bg-[#0A0A0A] text-[#FFFFFF]">USR03</span>
+                    </div>
+                    <div>
+                        <label for="reg-nama-input" class="block text-[11px] font-black uppercase tracking-wider mb-1">Nama_User</label>
+                        <input type="text" id="reg-nama-input" required placeholder="Nama Lengkap Kasir" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#0A0A0A] text-xs font-semibold focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="reg-email-input" class="block text-[11px] font-black uppercase tracking-wider mb-1">Email</label>
+                        <input type="email" id="reg-email-input" required placeholder="kasir@lilaluna.id" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#0A0A0A] text-xs font-semibold focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="reg-pass-input" class="block text-[11px] font-black uppercase tracking-wider mb-1">Password</label>
+                        <input type="password" id="reg-pass-input" required placeholder="Minimal 4 karakter" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#0A0A0A] text-xs font-semibold focus:outline-none">
+                    </div>
+                    <button type="submit" class="w-full py-3 rounded-xl bg-[#0A0A0A] text-[#FFFFFF] text-xs font-black uppercase tracking-wider hover:opacity-90 transition-opacity">
+                        Daftar &amp; Masuk Dashboard
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MONOCHROME TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast-container" class="fixed top-[82px] left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none w-[92%] max-w-sm"></div>
+
+    <script>
+        /**
+         * ============================================================================
+         * 1. STATE & DATA INITIALIZATION (Aligned with LILALUNA Java Classes)
+         * ============================================================================
+         */
+        const usersList = [
+            { idUser: 'USR01', namaUser: 'Ali Ataurrahman', email: 'ali@lilaluna.id', password: '123' },
+            { idUser: 'USR02', namaUser: 'Nabila Azzahra', email: 'nabila@lilaluna.id', password: '123' }
+        ];
+
+        let currentSession = {
+            sessionId: 'SES-01',
+            loginTime: new Date(),
+            user: usersList[0]
+        };
+
+        let databasePesanan = [
+            { idPesanan: 'ORD001', namaPelanggan: 'Dimas Saputra', jenisKaos: 'Heavyweight Boxy Tee 24s', ukuran: 'L', jumlah: 2, harga: 135000 },
+            { idPesanan: 'ORD002', namaPelanggan: 'Alya Rahmadani', jenisKaos: 'Cotton Combed 30s Oversize', ukuran: 'M', jumlah: 3, harga: 110000 },
+            { idPesanan: 'ORD003', namaPelanggan: 'Farhan Nugroho', jenisKaos: 'Washed Vintage Graphic Tee', ukuran: 'XL', jumlah: 1, harga: 155000 },
+            { idPesanan: 'ORD004', namaPelanggan: 'Keisha Putri', jenisKaos: 'Longsleeve Ribbed Monochrome', ukuran: 'S', jumlah: 2, harga: 145000 }
+        ];
+
+        let auditLog = [
+            { id: 1, time: '09:15:10', status: 'SUKSES', userId: 'USR01', message: 'Sesi kasir USR01 (Ali Ataurrahman) aktif' },
+            { id: 2, time: '09:24:45', status: 'SUKSES', userId: 'USR01', message: 'Menambahkan pesanan ID: ORD001 untuk Dimas Saputra' },
+            { id: 3, time: '10:02:18', status: 'SUKSES', userId: 'USR01', message: 'Menambahkan pesanan ID: ORD002 untuk Alya Rahmadani' }
+        ];
+
+        let currentView = 'dashboard';
+        let sortAscending = true;
+        let currentLogFilter = 'ALL';
+        let pendingDeleteOrderId = null;
+        let sessionPillCompact = false;
+
+        /**
+         * ============================================================================
+         * 2. SESSION GUARD & UTILITIES
+         * ============================================================================
+         */
+        function validateSession() {
+            return Boolean(
+                currentSession &&
+                currentSession.sessionId &&
+                currentSession.user &&
+                currentSession.user.idUser
+            );
+        }
+
+        function requireActiveSession() {
+            if (!validateSession()) {
+                enforceLoggedOutScreen(false);
+                showMonoToast('Akses Terkunci', 'Anda telah log out. Silakan login terlebih dahulu untuk mengakses dashboard.', true);
+                return false;
+            }
+            return true;
+        }
+
+        function formatRupiah(amount) {
+            return 'Rp ' + Number(amount || 0).toLocaleString('id-ID');
+        }
+
+        function nowTimeString() {
+            const d = new Date();
+            return d.toTimeString().split(' ')[0];
+        }
+
+        function showMonoToast(title, message, isError) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'pointer-events-auto w-full rounded-2xl border-2 border-[#0A0A0A] px-4 py-3 shadow-xl flex items-start gap-3 animate-panel ' +
+                (isError ? 'bg-[#0A0A0A] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#0A0A0A]');
+
+            const badge = document.createElement('span');
+            badge.className = 'px-2 py-0.5 rounded-md text-[10px] font-mono-code font-black shrink-0 ' +
+                (isError ? 'bg-[#FFFFFF] text-[#0A0A0A]' : 'bg-[#0A0A0A] text-[#FFFFFF]');
+            badge.textContent = isError ? 'ERR' : 'OK';
+
+            const body = document.createElement('div');
+            body.className = 'flex-1 min-w-0';
+            body.innerHTML = '<div class="text-xs font-black tracking-tight">' + title + '</div>' +
+                             '<div class="text-[11px] opacity-80 leading-snug mt-0.5">' + message + '</div>';
+
+            toast.appendChild(badge);
+            toast.appendChild(body);
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.25s ease';
+                setTimeout(() => toast.remove(), 260);
+            }, 3000);
+        }
+
+        function recordAudit(status, message) {
+            const actorId = validateSession() ? currentSession.user.idUser : 'GUEST';
+            auditLog.unshift({
+                id: Date.now() + Math.random(),
+                time: nowTimeString(),
+                status: status,
+                userId: actorId,
+                message: message
+            });
+            if (validateSession()) {
+                renderAuditLogList();
+            }
+        }
+
+        /**
+         * ============================================================================
+         * 3. VIEW NAVIGATION & QUICK FLOATING TAB ACTIONS
+         * ============================================================================
+         */
+        function activateView(viewName) {
+            if (!requireActiveSession()) return;
+            currentView = viewName;
+
+            const panels = ['view-dashboard', 'view-list-order', 'view-summary', 'view-audit-log'];
+            panels.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (id === 'view-' + viewName) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+
+            document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
+                const navTarget = btn.getAttribute('data-nav');
+                if (navTarget === viewName) {
+                    btn.classList.add('bg-zinc-200/80');
+                } else {
+                    btn.classList.remove('bg-zinc-200/80');
+                }
+            });
+
+            if (viewName === 'list-order') {
+                renderOrderList();
+            } else if (viewName === 'summary') {
+                renderSummaryPanel();
+            } else if (viewName === 'audit-log') {
+                renderAuditLogList();
+            }
+        }
+
+        function triggerQuickSearch() {
+            if (!requireActiveSession()) return;
+            activateView('list-order');
+            setTimeout(() => {
+                const searchInput = document.getElementById('order-search-input');
+                if (searchInput) {
+                    searchInput.focus();
+                    searchInput.select();
+                }
+            }, 60);
+        }
+
+        function triggerQuickSort() {
+            if (!requireActiveSession()) return;
+            if (currentView === 'list-order') {
+                toggleSortDirection();
+            } else {
+                activateView('list-order');
+                showMonoToast('Sort Pesanan', 'Gunakan pilihan urutan pada daftar pesanan.', false);
+            }
+        }
+
+        function toggleSessionPillCompact() {
+            if (!requireActiveSession()) return;
+            sessionPillCompact = !sessionPillCompact;
+            const pillText = document.getElementById('session-pill-text');
+            if (sessionPillCompact) {
+                pillText.textContent = validateSession() ? currentSession.user.idUser : 'GUEST';
+            } else {
+                updateSessionHeaderPill();
+            }
+        }
+
+        function updateSessionHeaderPill() {
+            const dot = document.getElementById('session-status-dot');
+            const textEl = document.getElementById('session-pill-text');
+            const countEl = document.getElementById('pill-order-count');
+
+            if (countEl) countEl.textContent = databasePesanan.length;
+
+            if (validateSession()) {
+                if (dot) dot.className = 'w-2.5 h-2.5 rounded-full bg-[#0A0A0A] animate-pulse';
+                if (textEl) {
+                    textEl.textContent = sessionPillCompact
+                        ? currentSession.user.idUser
+                        : currentSession.user.idUser + ' • ACTIVE';
+                }
+            } else {
+                if (dot) dot.className = 'w-2.5 h-2.5 rounded-full border-2 border-[#0A0A0A] bg-white';
+                if (textEl) textEl.textContent = 'LOGGED OUT';
+            }
+        }
+
+        /**
+         * ============================================================================
+         * 4. CREATE / ADD ORDER (Pesanan.validasiPesanan & OrderController)
+         * ============================================================================
+         */
+        function suggestNextOrderId() {
+            let maxNum = 0;
+            const idRegex = new RegExp('(\\d+)$');
+            databasePesanan.forEach(p => {
+                const match = p.idPesanan.match(idRegex);
+                if (match) {
+                    const num = parseInt(match[1], 10);
+                    if (num > maxNum) maxNum = num;
+                }
+            });
+            document.getElementById('field-id').value = 'ORD' + String(maxNum + 1).padStart(3, '0');
+        }
+
+        function refreshFormSubtotal() {
+            const qty = parseInt(document.getElementById('field-jumlah').value, 10) || 0;
+            const price = parseFloat(document.getElementById('field-harga').value) || 0;
+            document.getElementById('field-subtotal-preview').textContent = formatRupiah(qty * price);
+        }
+
+        function openAddOrderModal() {
+            if (!requireActiveSession()) return;
+            suggestNextOrderId();
+            refreshFormSubtotal();
+            const modal = document.getElementById('modal-add-order');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                document.getElementById('field-nama').focus();
+            }, 60);
+        }
+
+        function closeAddOrderModal() {
+            const modal = document.getElementById('modal-add-order');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function submitOrderForm(event) {
+            event.preventDefault();
+            if (!requireActiveSession()) return;
+
+            const id = document.getElementById('field-id').value.trim().toUpperCase();
+            const nama = document.getElementById('field-nama').value.trim();
+            const jenis = document.getElementById('field-jenis').value.trim();
+            const ukuran = document.getElementById('field-ukuran').value.trim().toUpperCase();
+            const jumlah = parseInt(document.getElementById('field-jumlah').value, 10);
+            const harga = parseFloat(document.getElementById('field-harga').value);
+
+            const validSizes = ['S', 'M', 'L', 'XL', 'XXL'];
+            if (!id || !nama || !jenis || isNaN(jumlah) || isNaN(harga) || jumlah <= 0 || harga <= 0 || !validSizes.includes(ukuran)) {
+                recordAudit('GAGAL', 'GAGAL: data pesanan ID ' + (id || '(kosong)') + ' tidak valid');
+                showMonoToast('Validasi Gagal', 'Pastikan nama terisi, ukuran (S-XXL) valid, serta jumlah & harga > 0.', true);
+                return;
+            }
+
+            if (databasePesanan.some(p => p.idPesanan.toUpperCase() === id)) {
+                recordAudit('GAGAL', 'GAGAL: ID ' + id + ' sudah ada di database');
+                showMonoToast('ID Duplikat', 'ID Pesanan ' + id + ' sudah terdaftar.', true);
+                return;
+            }
+
+            databasePesanan.unshift({
+                idPesanan: id,
+                namaPelanggan: nama,
+                jenisKaos: jenis,
+                ukuran: ukuran,
+                jumlah: jumlah,
+                harga: harga
+            });
+
+            recordAudit('SUKSES', 'Menambahkan pesanan ID: ' + id + ' untuk ' + nama + ' (' + jumlah + 'x ' + ukuran + ')');
+            updateSessionHeaderPill();
+            document.getElementById('form-add-order').reset();
+            closeAddOrderModal();
+            showMonoToast('Pesanan Disimpan', id + ' (' + nama + ') berhasil ditambahkan.', false);
+
+            if (currentView === 'list-order') renderOrderList();
+            if (currentView === 'summary') renderSummaryPanel();
+        }
+
+        /**
+         * ============================================================================
+         * 5. LIST ORDER, SEARCH, SORT & DELETE
+         * ============================================================================
+         */
+        function toggleSortDirection() {
+            if (!requireActiveSession()) return;
+            sortAscending = !sortAscending;
+            const btn = document.getElementById('order-sort-dir-btn');
+            btn.textContent = sortAscending ? 'ASC ↑' : 'DESC ↓';
+            renderOrderList();
+        }
+
+        function renderOrderList() {
+            if (!requireActiveSession()) return;
+            const keyword = document.getElementById('order-search-input').value.trim().toLowerCase();
+            const sortBy = document.getElementById('order-sort-select').value;
+            const container = document.getElementById('order-list-container');
+
+            let filtered = databasePesanan.filter(p =>
+                p.idPesanan.toLowerCase().includes(keyword) ||
+                p.namaPelanggan.toLowerCase().includes(keyword) ||
+                p.jenisKaos.toLowerCase().includes(keyword) ||
+                p.ukuran.toLowerCase().includes(keyword)
+            );
+
+            filtered.sort((a, b) => {
+                let cmp = 0;
+                if (sortBy === 'id') {
+                    cmp = a.idPesanan.localeCompare(b.idPesanan);
+                } else if (sortBy === 'nama') {
+                    cmp = a.namaPelanggan.localeCompare(b.namaPelanggan);
+                } else if (sortBy === 'jumlah') {
+                    cmp = a.jumlah - b.jumlah;
+                } else if (sortBy === 'total') {
+                    cmp = (a.jumlah * a.harga) - (b.jumlah * b.harga);
+                }
+                return sortAscending ? cmp : -cmp;
+            });
+
+            document.getElementById('list-order-subtitle').textContent =
+                'Menampilkan ' + filtered.length + ' dari ' + databasePesanan.length + ' pesanan';
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="p-8 text-center text-xs font-bold text-zinc-500">Tidak ada pesanan yang cocok dengan pencarian Anda.</div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(p => {
+                const subtotal = p.jumlah * p.harga;
+                return `
+                    <div class="p-4 hover:bg-zinc-50 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded-md bg-[#0A0A0A] text-[#FFFFFF] font-mono-code text-[11px] font-bold">${p.idPesanan}</span>
+                                <span class="font-extrabold text-sm text-[#0A0A0A]">${p.namaPelanggan}</span>
+                                <span class="px-2 py-0.5 rounded-full border border-[#0A0A0A] font-mono-code text-[10px] font-black">${p.ukuran}</span>
+                            </div>
+                            <div class="text-xs text-zinc-600 font-medium">
+                                ${p.jenisKaos} &bull; <span class="font-mono-code font-bold text-[#0A0A0A]">${p.jumlah} pcs</span> &times; ${formatRupiah(p.harga)}
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-black/10">
+                            <div class="text-left sm:text-right">
+                                <span class="block text-[10px] uppercase font-extrabold text-zinc-400">Subtotal</span>
+                                <span class="font-brand text-sm text-[#0A0A0A]">${formatRupiah(subtotal)}</span>
+                            </div>
+                            <button type="button" onclick="promptDeleteOrder('${p.idPesanan}')" title="Hapus Pesanan" class="px-3 py-1.5 rounded-xl border-2 border-[#0A0A0A] text-[11px] font-extrabold hover:bg-[#0A0A0A] hover:text-[#FFFFFF] transition-colors">
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function promptDeleteOrder(idPesanan) {
+            if (!requireActiveSession()) return;
+            const target = databasePesanan.find(p => p.idPesanan === idPesanan);
+            if (!target) return;
+
+            pendingDeleteOrderId = idPesanan;
+            document.getElementById('delete-confirm-msg').innerHTML =
+                'Hapus pesanan <strong>' + target.idPesanan + '</strong> milik <strong>' + target.namaPelanggan + '</strong> dari sistem&#63;';
+
+            const modal = document.getElementById('modal-delete-confirm');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            document.getElementById('btn-confirm-delete').onclick = () => {
+                if (!requireActiveSession()) return;
+                if (pendingDeleteOrderId) {
+                    const idx = databasePesanan.findIndex(item => item.idPesanan === pendingDeleteOrderId);
+                    if (idx !== -1) {
+                        const removed = databasePesanan.splice(idx, 1)[0];
+                        recordAudit('SUKSES', 'Menghapus pesanan ID: ' + removed.idPesanan + ' (' + removed.namaPelanggan + ')');
+                        updateSessionHeaderPill();
+                        renderOrderList();
+                        showMonoToast('Pesanan Dihapus', 'Pesanan ' + removed.idPesanan + ' berhasil dihapus.', false);
+                    }
+                }
+                closeDeleteConfirmModal();
+            };
+        }
+
+        function closeDeleteConfirmModal() {
+            pendingDeleteOrderId = null;
+            const modal = document.getElementById('modal-delete-confirm');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        /**
+         * ============================================================================
+         * 6. SUMMARY REPORT (LaporanRangkuman)
+         * ============================================================================
+         */
+        function renderSummaryPanel() {
+            if (!requireActiveSession()) return;
+            const totPes = databasePesanan.length;
+            let totPen = 0;
+            let totQty = 0;
+            const sizeCounts = { S: 0, M: 0, L: 0, XL: 0, XXL: 0 };
+            const typeRevenue = {};
+
+            databasePesanan.forEach(p => {
+                const sub = p.jumlah * p.harga;
+                totPen += sub;
+                totQty += p.jumlah;
+                if (sizeCounts[p.ukuran] !== undefined) {
+                    sizeCounts[p.ukuran] += p.jumlah;
+                }
+                typeRevenue[p.jenisKaos] = (typeRevenue[p.jenisKaos] || 0) + sub;
+            });
+
+            let topSize = '-';
+            let maxSizeQty = 0;
+            Object.entries(sizeCounts).forEach(([sz, count]) => {
+                if (count > maxSizeQty) {
+                    maxSizeQty = count;
+                    topSize = sz;
+                }
+            });
+
+            document.getElementById('sum-tot-pes').textContent = totPes;
+            document.getElementById('sum-tot-pen').textContent = formatRupiah(totPen);
+            document.getElementById('sum-tot-qty').textContent = totQty + ' pcs';
+            document.getElementById('sum-top-size').textContent = topSize;
+
+            const sizeBarsContainer = document.getElementById('summary-size-bars');
+            sizeBarsContainer.innerHTML = Object.entries(sizeCounts).map(([sz, count]) => {
+                const pct = totQty > 0 ? Math.round((count / totQty) * 100) : 0;
+                return `
+                    <div>
+                        <div class="flex justify-between text-[11px] font-extrabold mb-1">
+                            <span class="font-mono-code">Ukuran ${sz}</span>
+                            <span class="font-mono-code">${count} pcs (${pct}%)</span>
+                        </div>
+                        <div class="w-full h-2.5 rounded-full bg-zinc-200 overflow-hidden border border-[#0A0A0A]">
+                            <div class="h-full bg-[#0A0A0A] transition-all duration-300" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const typeListContainer = document.getElementById('summary-type-list');
+            const typeEntries = Object.entries(typeRevenue).sort((a, b) => b[1] - a[1]);
+            if (typeEntries.length === 0) {
+                typeListContainer.innerHTML = '<p class="text-zinc-500">Belum ada data penjualan.</p>';
+            } else {
+                typeListContainer.innerHTML = typeEntries.map(([jenis, rev]) => `
+                    <div class="flex items-center justify-between py-1.5 border-b border-black/10 last:border-b-0">
+                        <span class="font-bold text-[#0A0A0A] truncate pr-2">${jenis}</span>
+                        <span class="font-mono-code font-extrabold shrink-0">${formatRupiah(rev)}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        /**
+         * ============================================================================
+         * 7. AUDIT LOG PANEL
+         * ============================================================================
+         */
+        function setLogFilter(filterValue) {
+            if (!requireActiveSession()) return;
+            currentLogFilter = filterValue;
+            document.querySelectorAll('.log-filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-log-filter') === filterValue) {
+                    btn.className = 'log-filter-btn px-3 py-1 rounded-lg bg-[#0A0A0A] text-[#FFFFFF] text-[11px] font-extrabold';
+                } else {
+                    btn.className = 'log-filter-btn px-3 py-1 rounded-lg bg-[#FFFFFF] border border-[#0A0A0A] text-[#0A0A0A] text-[11px] font-extrabold';
+                }
+            });
+            renderAuditLogList();
+        }
+
+        function renderAuditLogList() {
+            if (!requireActiveSession()) return;
+            const container = document.getElementById('audit-log-container');
+            const filtered = auditLog.filter(item => currentLogFilter === 'ALL' || item.status === currentLogFilter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="p-6 text-center text-xs font-bold text-zinc-500">Tidak ada catatan audit log pada filter ini.</div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(log => {
+                const isSuccess = log.status === 'SUKSES';
+                return `
+                    <div class="p-3 rounded-xl hover:bg-zinc-50 flex items-start gap-2.5 text-xs">
+                        <span class="px-2 py-0.5 rounded font-mono-code text-[10px] font-black shrink-0 ${isSuccess ? 'bg-[#0A0A0A] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#0A0A0A] border-2 border-[#0A0A0A]'}">
+                            ${log.status}
+                        </span>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-[#0A0A0A] leading-snug">${log.message}</p>
+                            <span class="font-mono-code text-[10px] text-zinc-500">${log.time} &bull; Actor: ${log.userId}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clearAuditLog() {
+            if (!requireActiveSession()) return;
+            auditLog = [];
+            recordAudit('SUKSES', 'Audit log dibersihkan oleh ' + currentSession.user.idUser);
+            showMonoToast('Log Dibersihkan', 'Riwayat audit log telah diperbarui.', false);
+        }
+
+        /**
+         * ============================================================================
+         * 8. STRICT LOG OUT CONFIRMATION & FULL-SCREEN LOGIN LOCK (UserSession)
+         * ============================================================================
+         */
+        function getNextSequentialUserId() {
+            let maxNum = 0;
+            usersList.forEach(u => {
+                const num = parseInt(u.idUser.replace('USR', ''), 10);
+                if (!isNaN(num) && num > maxNum) {
+                    maxNum = num;
+                }
+            });
+            return 'USR' + String(maxNum + 1).padStart(2, '0');
+        }
+
+        function renderDemoUserChips() {
+            const container = document.getElementById('demo-user-chips');
+            if (!container) return;
+            container.innerHTML = usersList.map(u => `
+                <button type="button" onclick="fillDemoLogin('${u.email}', '${u.password}')" class="px-2.5 py-1 rounded-lg bg-[#FFFFFF] border border-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-[#FFFFFF] font-mono-code text-[11px] font-bold transition-colors">
+                    ${u.idUser} (${u.namaUser.split(' ')[0]})
+                </button>
+            `).join('');
+        }
+
+        function fillDemoLogin(email, pass) {
+            document.getElementById('login-email-input').value = email;
+            document.getElementById('login-pass-input').value = pass;
+        }
+
+        function handleLogoutClick() {
+            if (!requireActiveSession()) return;
+
+            const user = currentSession.user;
+            document.getElementById('logout-user-info').textContent = user.idUser + ' — ' + user.namaUser;
+
+            const modal = document.getElementById('modal-logout-confirm');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeLogoutConfirmModal() {
+            const modal = document.getElementById('modal-logout-confirm');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function confirmLogoutAction() {
+            if (validateSession()) {
+                const oldUser = currentSession.user;
+                // Opsional: Simpan log ke database sungguhan di sini
+                console.log('Sesi kasir ' + oldUser.idUser + ' berhasil logout');
+            }
+
+            currentSession = null;
+            closeLogoutConfirmModal();
+            
+            // --- TAMBAHKAN KODE INI ---
+            // Hapus status login di browser (jika Anda menggunakan localStorage)
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            
+            // Alihkan halaman ke index.html (halaman login Anda)
+            // Ganti 'index.html' jika nama file login Anda berbeda
+            window.location.href = 'index.html'; 
+            // ---------------------------
+        }
+
+        function enforceLoggedOutScreen(showLogoutNotice) {
+            const dashboardShell = document.getElementById('dashboard-shell');
+            const loginScreen = document.getElementById('login-screen');
+            const logoutBanner = document.getElementById('logout-status-banner');
+
+            if (dashboardShell) {
+                dashboardShell.classList.add('hidden');
+                dashboardShell.style.display = 'none';
+            }
+
+            renderDemoUserChips();
+            const nextIdEl = document.getElementById('register-next-id');
+            if (nextIdEl) nextIdEl.textContent = getNextSequentialUserId();
+
+            const loginForm = document.getElementById('auth-form-login');
+            if (loginForm) loginForm.reset();
+
+            switchAuthMode('login');
+
+            if (logoutBanner) {
+                if (showLogoutNotice) {
+                    logoutBanner.classList.remove('hidden');
+                } else {
+                    logoutBanner.classList.add('hidden');
+                }
+            }
+
+            if (loginScreen) {
+                loginScreen.classList.remove('hidden');
+                loginScreen.classList.add('flex');
+            }
+        }
+
+        function enterDashboardAfterAuth() {
+            const dashboardShell = document.getElementById('dashboard-shell');
+            const loginScreen = document.getElementById('login-screen');
+            const logoutBanner = document.getElementById('logout-status-banner');
+
+            if (logoutBanner) logoutBanner.classList.add('hidden');
+            if (loginScreen) {
+                loginScreen.classList.add('hidden');
+                loginScreen.classList.remove('flex');
+            }
+
+            if (dashboardShell) {
+                dashboardShell.style.display = '';
+                dashboardShell.classList.remove('hidden');
+            }
+
+            updateSessionHeaderPill();
+            renderOrderList();
+            renderSummaryPanel();
+            renderAuditLogList();
+            activateView('dashboard');
+        }
+
+        function switchAuthMode(mode) {
+            const loginForm = document.getElementById('auth-form-login');
+            const regForm = document.getElementById('auth-form-register');
+            const tabLogin = document.getElementById('auth-tab-login');
+            const tabReg = document.getElementById('auth-tab-register');
+
+            if (mode === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.className = 'py-2 rounded-lg bg-[#0A0A0A] text-[#FFFFFF] transition-all';
+                tabReg.className = 'py-2 rounded-lg text-[#0A0A0A] transition-all';
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabReg.className = 'py-2 rounded-lg bg-[#0A0A0A] text-[#FFFFFF] transition-all';
+                tabLogin.className = 'py-2 rounded-lg text-[#0A0A0A] transition-all';
+                document.getElementById('register-next-id').textContent = getNextSequentialUserId();
+            }
+        }
+
+        function submitLoginForm(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email-input').value.trim().toLowerCase();
+            const pass = document.getElementById('login-pass-input').value;
+
+            const matched = usersList.find(u => u.email.toLowerCase() === email && u.password === pass);
+            if (!matched) {
+                recordAudit('GAGAL', 'GAGAL LOGIN: Email/Password tidak cocok (' + email + ')');
+                showMonoToast('Login Gagal', 'Email atau password tidak sesuai dengan database user.', true);
+                return;
+            }
+
+            currentSession = {
+                sessionId: 'SES-' + matched.idUser.replace('USR', ''),
+                loginTime: new Date(),
+                user: matched
+            };
+
+            recordAudit('SUKSES', 'Login berhasil: ' + matched.idUser + ' (' + matched.namaUser + ')');
+            showMonoToast('Login Berhasil', 'Selamat datang, ' + matched.namaUser + ' (' + matched.idUser + ').', false);
+            enterDashboardAfterAuth();
+        }
+
+        function submitRegisterForm(event) {
+            event.preventDefault();
+            const nama = document.getElementById('reg-nama-input').value.trim();
+            const email = document.getElementById('reg-email-input').value.trim().toLowerCase();
+            const pass = document.getElementById('reg-pass-input').value;
+
+            if (!nama || !email || pass.length < 4) {
+                showMonoToast('Registrasi Gagal', 'Lengkapi Nama_User, Email, dan Password minimal 4 karakter.', true);
+                return;
+            }
+
+            if (usersList.some(u => u.email.toLowerCase() === email)) {
+                showMonoToast('Email Sudah Ada', 'Email tersebut sudah terdaftar di database.', true);
+                return;
+            }
+
+            const newUserId = getNextSequentialUserId();
+            const newUser = {
+                idUser: newUserId,
+                namaUser: nama,
+                email: email,
+                password: pass
+            };
+
+            usersList.push(newUser);
+            currentSession = {
+                sessionId: 'SES-' + newUserId.replace('USR', ''),
+                loginTime: new Date(),
+                user: newUser
+            };
+
+            document.getElementById('auth-form-register').reset();
+            recordAudit('SUKSES', 'Registrasi user baru ' + newUserId + ' (' + nama + ')');
+            showMonoToast('Registrasi Sukses', 'Akun ' + newUserId + ' (' + nama + ') berhasil dibuat dan aktif.', false);
+            enterDashboardAfterAuth();
+        }
+
+        // Bind global handlers explicitly on window
+        window.activateView = activateView;
+        window.triggerQuickSearch = triggerQuickSearch;
+        window.triggerQuickSort = triggerQuickSort;
+        window.toggleSessionPillCompact = toggleSessionPillCompact;
+        window.openAddOrderModal = openAddOrderModal;
+        window.closeAddOrderModal = closeAddOrderModal;
+        window.refreshFormSubtotal = refreshFormSubtotal;
+        window.submitOrderForm = submitOrderForm;
+        window.toggleSortDirection = toggleSortDirection;
+        window.renderOrderList = renderOrderList;
+        window.promptDeleteOrder = promptDeleteOrder;
+        window.closeDeleteConfirmModal = closeDeleteConfirmModal;
+        window.setLogFilter = setLogFilter;
+        window.clearAuditLog = clearAuditLog;
+        window.fillDemoLogin = fillDemoLogin;
+        window.handleLogoutClick = handleLogoutClick;
+        window.closeLogoutConfirmModal = closeLogoutConfirmModal;
+        window.confirmLogoutAction = confirmLogoutAction;
+        window.switchAuthMode = switchAuthMode;
+        window.submitLoginForm = submitLoginForm;
+        window.submitRegisterForm = submitRegisterForm;
+
+        /**
+         * ============================================================================
+         * 9. INITIALIZATION ON DOM LOAD
+         * ============================================================================
+         */
+        window.addEventListener('DOMContentLoaded', () => {
+            // Cek apakah ada session di localStorage (di-set oleh proses login)
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            
+            if (!isLoggedIn) {
+                // Jika tidak ada, tendang kembali ke halaman login
+                window.location.href = 'index.html';
+            } else {
+                // Jika ada, jalankan inisialisasi dashboard
+                if (validateSession()) {
+                    enterDashboardAfterAuth();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
