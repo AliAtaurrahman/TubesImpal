@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Lilaluna - Gotham & Shadow</title>
+    <style>
+        /* Import Font Alternatif (Montserrat sangat mirip dengan Gotham) */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+        /* Reset Dasar */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* Menggunakan Montserrat ExtraBold sebagai pengganti Gotham Black jika tidak ada */
+            font-family: 'Gotham Black', 'Montserrat', 'Arial Black', sans-serif;
+        }
+
+        body {
+            background-color: #0b0b0b; 
+            /* Pola SVG Topografi (Garis abu-abu tipis melengkung) */
+            background-image: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23333333' stroke-width='2' stroke-opacity='0.8'%3E%3Cpath d='M-50,50 Q50,150 150,50 T350,150 T450,50'/%3E%3Cpath d='M-50,100 Q50,200 170,100 T380,200 T480,100'/%3E%3Cpath d='M-50,150 Q50,250 190,150 T410,250 T510,150'/%3E%3Cpath d='M-50,200 Q50,300 210,200 T440,300 T540,200'/%3E%3Cpath d='M-50,250 Q50,350 230,250 T470,350 T570,250'/%3E%3Cpath d='M-50,300 Q50,400 250,300 T500,400 T600,300'/%3E%3Cpath d='M-50,350 Q50,450 270,350 T530,450 T630,350'/%3E%3Cpath d='M-50,400 Q50,500 290,400 T560,500 T660,400'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 1. Header LILALUNA */
+        .brand-header {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            z-index: 10;
+            /* Shadow untuk logo */
+            filter: drop-shadow(0px 8px 10px rgba(0,0,0,0.6));
+        }
+
+        .brand-header h1 {
+            color: #000;
+            background-color: #fff;
+            font-size: 38px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            padding: 15px 40px 15px 25px;
+            clip-path: polygon(0 0, 100% 0, 88% 100%, 0% 100%);
+        }
+
+        /* 2. Container Utama Kartu Login */
+        .login-wrapper {
+            position: relative;
+            width: 400px;
+            z-index: 10;
+            margin-top: 50px; 
+            
+            /* SHADOW UTAMA UNTUK SELURUH KARTU FORM */
+            /* Bayangan jatuh ke bawah dan sedikit ke samping agar terkesan 3D */
+            filter: drop-shadow(15px 20px 25px rgba(0, 0, 0, 0.7));
+        }
+
+        /* Bagian Judul "Log in" (Hitam Melengkung) */
+        .login-title-bg {
+            background-color: #000;
+            color: #fff;
+            padding: 30px 30px 20px 30px;
+            font-size: 42px;
+            font-weight: 900;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+            position: relative;
+            z-index: 2;
+            margin-bottom: -25px; 
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        /* Bagian Form (Putih) */
+        .login-form-card {
+            background-color: #fff;
+            padding: 60px 40px 50px 40px;
+            border-radius: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Styling Input Group */
+        .input-group {
+            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .input-group label {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 900;
+            padding: 6px 15px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            position: relative;
+            top: 3px; 
+            z-index: 2;
+            margin-left: 10px;
+            letter-spacing: 1px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background-color: #000;
+            border: 3px solid #000;
+            color: #fff;
+            padding: 15px 20px;
+            font-size: 16px;
+            outline: none;
+            border-radius: 0 8px 8px 8px; 
+            font-family: Arial, sans-serif; /* Input tetap pakai font biasa agar mudah dibaca */
+        }
+
+        /* Tombol Confirm */
+        .btn-submit {
+            display: block;
+            background-color: #222;
+            color: #fff;
+            border: none;
+            padding: 15px 50px;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            margin: 40px auto 0 auto;
+            border-radius: 4px;
+            transition: background 0.3s, transform 0.2s;
+            letter-spacing: 1px;
+            /* Shadow pada tombol */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-submit:hover {
+            background-color: #000;
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Kiri Atas -->
+    <div class="brand-header">
+        <h1>LILALUNA</h1>
+    </div>
+
+    <!-- Kartu Login -->
+    <div class="login-wrapper">
+        
+        <!-- Judul Hitam -->
+        <div class="login-title-bg">
+            Log in
+        </div>
+
+        <!-- Kotak Putih Form -->
+        <div class="login-form-card">
+            <form action="prosesLogin.jsp" method="POST">
+                
+                <div class="input-group">
+                    <label for="Email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Confirm</button>
+
+                <!-- Tambahan Link Sign Up -->
+                <div style="text-align: center; margin-top: 20px; font-size: 12px; font-family: Arial, sans-serif; color: #666;">
+                    Belum punya akun? <a href="signup.html" style="color: #000; font-weight: bold; text-decoration: none;">Daftar di sini</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
